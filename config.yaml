@@ -1,0 +1,73 @@
+# reproduce
+seed: 42
+
+# model
+d_model: 256
+num_heads: 4
+num_layers: 4
+ff_dim: 512
+dropout: 0.1
+linear_attn: False
+mlp: True
+residual: True
+norm: True
+output_norm: True
+pos: null
+rotary_theta: 10000
+vocab_size: 41 # build_vocab(AGENT_POOL, OBJECT_POOL, LOCATION_POOL).__len__()
+
+# data
+max_seq_len: 125  # 10 agents * 11 (A enter; A move obj L; A exit; ) + 11(belief A B ... ) + 2(ans, eos)
+
+# test
+test_num_scenarios: 100
+test_min_agents: 1
+test_max_agents: 5
+test_num_objects: 1
+test_min_chain_length: 0
+test_max_chain_length: 1
+test_move_probability: 0.8
+test_num_questions_per_scenario: null
+test_seed: 1234
+
+# test_ood
+test_ood_num_scenarios: 100
+test_ood_min_agents: 1
+test_ood_max_agents: 5
+test_ood_num_objects: 1
+test_ood_min_chain_length: 2
+test_ood_max_chain_length: 3
+test_ood_move_probability: 0.8
+test_ood_num_questions_per_scenario: 10
+test_ood_seed: 42
+
+# train
+train_num_scenarios: 1000
+train_min_agents: 1
+train_max_agents: 5
+train_num_objects: 1
+train_min_chain_length: 0
+train_max_chain_length: 1
+train_move_probability: 0.8
+train_num_questions_per_scenario: null
+train_seed: 42 # only needed for finite setting, set to null for fresh sample setting
+
+# training
+device: "cuda"
+use_wd: True
+schedule: "constant"
+label_smoothing: True
+lr: 0.005
+wd: 0.0005
+batch_size: 1000
+num_epoch: 1000
+
+# logging
+wandb_log: True
+print_output: True
+n_step_print_output: 10 # how often steps to print output
+n_save: 2
+up_to_first_save: False
+
+# IO
+out_dir: "out"
